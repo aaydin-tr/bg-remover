@@ -37,6 +37,6 @@ WORKDIR /app
 
 COPY . .
 
-EXPOSE 8000
+EXPOSE ${PORT}
 
 CMD ["python3", "app.py"]

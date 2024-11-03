@@ -110,5 +110,9 @@ if __name__ == "__main__":
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     import uvicorn
+    from dotenv import load_dotenv
 
-    uvicorn.run(app, host="0.0.0.0", port=8002)
+    load_dotenv()
+
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
