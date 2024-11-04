@@ -25,17 +25,19 @@ def init(cuda_device):
 
     print("Initializing segmenter...")
 
-    if not os.path.exists("saved_models"):
-        os.mkdir("saved_models")
-        os.mkdir("git")
-        os.system("git clone https://github.com/xuebinqin/DIS git/xuebinqin/DIS")
+    if not os.path.exists("segmenter/saved_models"):
+        os.mkdir("segmenter/saved_models")
+        os.mkdir("segmenter/git")
+        os.system(
+            f"git clone https://github.com/xuebinqin/DIS segmenter/git/xuebinqin/DIS"
+        )
         hf_hub_download(
             repo_id="NimaBoscarino/IS-Net_DIS-general-use",
             filename="isnet-general-use.pth",
-            local_dir="saved_models",
+            local_dir="segmenter/saved_models",
         )
-        os.system("rm -r git/xuebinqin/DIS/IS-Net/__pycache__")
-        os.system("mv git/xuebinqin/DIS/IS-Net/* .")
+        os.system("rm -r segmenter/git/xuebinqin/DIS/IS-Net/__pycache__")
+        os.system("mv segmenter/git/xuebinqin/DIS/IS-Net/* ./segmenter/")
 
     import models
     import data_loader_cache
@@ -48,7 +50,7 @@ def init(cuda_device):
     hypar = {}  # paramters for inferencing
 
     # load trained weights from this path
-    hypar["model_path"] = "./saved_models"
+    hypar["model_path"] = "segmenter/saved_models"
     # name of the to-be-loaded weights
     hypar["restore_model"] = "isnet-general-use.pth"
     # indicate if activate intermediate feature supervision
