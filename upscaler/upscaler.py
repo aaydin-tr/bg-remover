@@ -17,17 +17,20 @@ def init(device):
 
     print("Initializing upscaler...")
 
-    if not os.path.exists("weights"):
-        os.mkdir("weights")
+    if not os.path.exists("./upscaler/weights"):
+        os.mkdir("./upscaler/weights")
         url = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth"
         response = requests.get(url)
-        with open("weights/RealESRGAN_x2plus.pth", "wb") as f:
+        with open("./upscaler/weights/RealESRGAN_x2plus.pth", "wb") as f:
             f.write(response.content)
     model = RRDBNet(
         num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=2
     )
     upsampler = RealESRGANer(
-        scale=2, model_path="weights/RealESRGAN_x2plus.pth", model=model, device=device
+        scale=2,
+        model_path="./upscaler/weights/RealESRGAN_x2plus.pth",
+        model=model,
+        device=device,
     )
 
 
