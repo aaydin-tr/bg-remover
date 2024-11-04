@@ -27,14 +27,15 @@ app = FastAPI()
 output_dir = "./img_output"
 
 
-class UploadResponse(BaseModel):
+class RemoveBGResponse(BaseModel):
     caption: str | None
     resized: str | None
     cropped: str
     crop_mask: str
+    error: str | None = None
 
 
-class UploadRequest(BaseModel):
+class RemoveBGRequest(BaseModel):
     url: str
     do_caption: bool = False
     do_resize: bool = False
@@ -42,8 +43,8 @@ class UploadRequest(BaseModel):
     headers: dict = {}
 
 
-@app.post("/upload", response_model=UploadResponse)
-async def upload_file(req: UploadRequest):
+@app.post("/remove-bg", response_model=RemoveBGResponse)
+async def remove_bg(req: RemoveBGRequest):
     if not req.url:
         raise HTTPException(status_code=400, detail="Missing URL parameter")
 
