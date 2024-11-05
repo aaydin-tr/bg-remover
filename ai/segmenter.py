@@ -25,20 +25,22 @@ def init(cuda_device):
 
     print("Initializing segmenter...")
 
-    if not os.path.exists("segmenter/saved_models"):
-        os.mkdir("segmenter/saved_models")
-        os.mkdir("segmenter/git")
-        os.system(
-            f"git clone https://github.com/xuebinqin/DIS segmenter/git/xuebinqin/DIS"
-        )
+    if not os.path.exists("./ai/saved_models"):
+        os.mkdir("./ai/saved_models")
+        os.mkdir("git")
+        os.system(f"git clone https://github.com/xuebinqin/DIS ./ai/git/xuebinqin/DIS")
         hf_hub_download(
             repo_id="NimaBoscarino/IS-Net_DIS-general-use",
             filename="isnet-general-use.pth",
-            local_dir="segmenter/saved_models",
+            local_dir="./ai/saved_models",
         )
-        os.system("rm -r segmenter/git/xuebinqin/DIS/IS-Net/__pycache__")
-        os.system("mv segmenter/git/xuebinqin/DIS/IS-Net/* ./segmenter/")
+        os.system("rm -r ./ai/git/xuebinqin/DIS/IS-Net/__pycache__")
+        os.system("mv ./ai/git/xuebinqin/DIS/IS-Net/* ./ai/.")
 
+    import sys
+
+    sys.path.append("./ai/")
+    # will be imported when git is cloned
     import models
     import data_loader_cache
 
@@ -50,7 +52,7 @@ def init(cuda_device):
     hypar = {}  # paramters for inferencing
 
     # load trained weights from this path
-    hypar["model_path"] = "segmenter/saved_models"
+    hypar["model_path"] = "./ai/saved_models"
     # name of the to-be-loaded weights
     hypar["restore_model"] = "isnet-general-use.pth"
     # indicate if activate intermediate feature supervision

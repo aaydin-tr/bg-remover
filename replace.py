@@ -3,9 +3,7 @@ import io
 import logging
 import torch
 from PIL import Image
-from captioner.captioner import derive_caption
-from image_utils import ensure_resolution
-from segmenter.segmenter import segment
+from ai import derive_caption, ensure_resolution, segment
 
 MEGAPIXELS = 1.0
 
@@ -18,7 +16,7 @@ def remove_background(
     do_resize=False,
 ):
     caption = None
-    resized = None
+    resized = original_image
     logging.info(f"ID: {id} Original size: {original_image.size}")
 
     if do_caption:

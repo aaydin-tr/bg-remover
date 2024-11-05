@@ -8,11 +8,14 @@ from pydantic import BaseModel
 import requests
 from uuid import uuid4
 
-from captioner.captioner import init as init_captioner
-from upscaler.upscaler import init as init_upscaler
-from segmenter.segmenter import init as init_segmenter
+from ai import init_captioner, init_upscaler, init_segmenter
 from replace import remove_background
 import logging
+from dotenv import load_dotenv
+
+load_dotenv()
+logging.basicConfig(level=os.environ.get("LOG_LEVEL", "INFO"))
+
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -80,6 +83,8 @@ async def remove_bg(req: RemoveBGRequest):
     except requests.RequestException as e:
         raise HTTPException(status_code=400, detail=f"Error fetching image: {str(e)}")
     except Exception as e:
+        tb = traceback.format_exc()
+        logging.error(f"Error processing image: {str(e)}\n{tb}")
         raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
     finally:
         os.remove(f"{output_dir}/{id}.png")

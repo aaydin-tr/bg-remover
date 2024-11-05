@@ -1,7 +1,7 @@
 import math
 from PIL import Image
 
-from upscaler.upscaler import upscale
+from . import upscale
 
 UPSCALE_PIXEL_THRESHOLD = 1
 DOWNSCALE_PIXEL_THRESHOLD = 1
