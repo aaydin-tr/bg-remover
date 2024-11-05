@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-  <h3 align="center">BG-Remover</h3>
+  <h3 align="center">Background Remover</h3>
 
   <p align="center">
     <br />
@@ -23,14 +23,14 @@ This is a simple tool to remove the background from an image. It uses the [DIS](
 ## Installation
 After setting up the .env file and choose the app port, you can run the app using the following methods:
 
-#### Local
+### Local
 In order to run models on GPU, you need to have a CUDA compatible GPU and install the required dependencies. You can follow the official [PyTorch](https://pytorch.org/get-started/locally/) installation guide to install PyTorch with CUDA support. After installing PyTorch, you can install the required dependencies using the following command:
 
 ```bash
 pip install -r requirements.txt
 python app.py
 ```
-#### Dokcer
+### Docker
 
 You can also run the app using Docker. Docker will automatically install the required dependencies and run the app. You don't need to install any dependencies manually. You can run the app using the following command:
 
