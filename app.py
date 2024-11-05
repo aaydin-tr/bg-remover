@@ -7,6 +7,9 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import requests
 from uuid import uuid4
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning, module="^torch")
 
 from ai import init_captioner, init_upscaler, init_segmenter
 from replace import remove_background
