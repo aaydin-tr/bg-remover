@@ -15,4 +15,5 @@ services:
     environment:
       - NVIDIA_VISIBLE_DEVICES=all  
       - PORT=${PORT}
+      - LOG_LEVEL=${LOG_LEVEL}
     runtime: nvidia  
