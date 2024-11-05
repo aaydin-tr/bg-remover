@@ -39,7 +39,21 @@ docker-compose up
 ```
 
 ## Usage
-You can use the app by sending a POST request to the `/remove-bg` endpoint with the following parameters:
+You can use the following CURL command to test the app:
+
+```bash
+curl -X POST "http://localhost:8000/remove-bg" -H "Content-Type: application/json" -d '{
+    "url": "https://example.com/image.jpg",
+    "do_caption": true,
+    "do_resize": true,
+    "megapixels": 2.0,
+    "headers": {
+      "Authorization": "Bearer token here or any other headers"
+    }
+}'
+```
+
+The app accepts a JSON request with the following fields:
 
 - `url`: The URL of the image to remove the background from.
 - `do_caption`: Whether to get the caption of the image or not. Default is `False`.
@@ -55,17 +69,6 @@ The app will return a JSON response with the following fields:
 - `crop_mask`: The URL of the crop mask image. (Base64 Encoded format)
 - `error`: The error message if any error occurs. This field will be `None` if there is no error.
 
-
-You can use the following CURL command to test the app:
-
-```bash
-curl -X POST "http://localhost:8000/remove-bg" -H "Content-Type: application/json" -d '{
-    "url": "https://example.com/image.jpg",
-    "do_caption": true,
-    "do_resize": true,
-    "megapixels": 2.0
-}'
-```
 
 ### Other Endpoints
 - `/health`: Check the health of the app.
