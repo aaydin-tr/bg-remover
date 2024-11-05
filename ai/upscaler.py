@@ -1,4 +1,5 @@
 # Based on https://github.com/xinntao/Real-ESRGAN/blob/master/inference_realesrgan.py
+import logging
 import os
 import requests
 
@@ -14,7 +15,7 @@ upsampler = None
 def init(device):
     global upsampler
 
-    print("Initializing upscaler...")
+    logging.info("Initializing upscaler...")
 
     if not os.path.exists("./ai/weights"):
         os.mkdir("./ai/weights")

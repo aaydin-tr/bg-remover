@@ -1,4 +1,5 @@
 from transformers import pipeline
+import logging
 
 captioner = None
 PROMPT = "The main subject of this picture is a"
@@ -7,7 +8,7 @@ PROMPT = "The main subject of this picture is a"
 def init(device):
     global captioner
 
-    print("Initializing captioner...")
+    logging.info("Initializing captioner...")
 
     captioner = pipeline(
         "image-to-text",

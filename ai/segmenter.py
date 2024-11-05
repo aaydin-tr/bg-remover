@@ -1,4 +1,5 @@
 # Based on https://github.com/xuebinqin/DIS/blob/main/Colab_Demo.ipynb
+import logging
 import os
 from huggingface_hub import hf_hub_download
 
@@ -23,19 +24,26 @@ def init(cuda_device):
     global device, ISNetDIS, normalize, im_preprocess, hypar, net
     device = cuda_device
 
-    print("Initializing segmenter...")
+    logging.info("Initializing segmenter...")
 
     if not os.path.exists("./ai/saved_models"):
-        os.mkdir("./ai/saved_models")
-        os.mkdir("git")
-        os.system(f"git clone https://github.com/xuebinqin/DIS ./ai/git/xuebinqin/DIS")
-        hf_hub_download(
-            repo_id="NimaBoscarino/IS-Net_DIS-general-use",
-            filename="isnet-general-use.pth",
-            local_dir="./ai/saved_models",
-        )
-        os.system("rm -r ./ai/git/xuebinqin/DIS/IS-Net/__pycache__")
-        os.system("mv ./ai/git/xuebinqin/DIS/IS-Net/* ./ai/.")
+        try:
+            os.mkdir("./ai/saved_models")
+            os.mkdir("git")
+            os.system(
+                f"git clone https://github.com/xuebinqin/DIS ./ai/git/xuebinqin/DIS"
+            )
+            hf_hub_download(
+                repo_id="NimaBoscarino/IS-Net_DIS-general-use",
+                filename="isnet-general-use.pth",
+                local_dir="./ai/saved_models",
+            )
+            os.system("rm -r ./ai/git/xuebinqin/DIS/IS-Net/__pycache__")
+            os.system("mv ./ai/git/xuebinqin/DIS/IS-Net/* ./ai/.")
+        except Exception as e:
+            logging.error(f"Error initializing segmenter: {str(e)}")
+            os.rmdir("./ai/saved_models")
+            raise e
 
     import sys
 
